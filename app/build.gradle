@@ -14,6 +14,8 @@ android {
         versionName rootProject.ext.android.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary= true
+
+        multiDexEnabled true
     }
     buildTypes {
         debug {
@@ -60,8 +62,9 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-moshi:2.1.0'
     implementation 'com.squareup.moshi:moshi-kotlin:1.5.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    implementation 'com.squareup.okhttp3:okhttp:3.8.0'
-    implementation 'com.google.code.gson:gson:2.8.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.8.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.6.0'
+    implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     implementation "io.reactivex.rxjava2:rxjava:2.1.7"
 
@@ -71,11 +74,20 @@ dependencies {
 
     //anko
     implementation "org.jetbrains.anko:anko:$anko_version"
+    implementation "org.jetbrains.kotlin:kotlin-reflect:1.2.21"
 
     //fragment
-    compile 'me.yokeyword:fragmentation:1.2.6'
-    compile 'me.yokeyword:fragmentation:1.2.6'
-    compile 'me.yokeyword:fragmentation-swipeback:1.2.6'
-    compile 'me.yokeyword:eventbus-activity-scope:1.1.0'
+    implementation 'me.yokeyword:fragmentation:1.2.6'
+    implementation 'me.yokeyword:fragmentation-swipeback:1.2.6'
 
+    //android-ktx
+    implementation 'androidx.core:core-ktx:0.1'
+
+    //Leakcanary
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    //log
+    implementation 'com.orhanobut:logger:2.1.1'
+
+    implementation 'com.google.android:flexbox:0.2.5'
 }

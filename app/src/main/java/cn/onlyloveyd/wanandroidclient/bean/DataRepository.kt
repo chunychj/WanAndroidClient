@@ -10,6 +10,9 @@ import com.squareup.moshi.Json
  * 博   客: https://onlyloveyd.cn
  * 描   述：
  */
+data class HttpResult<T>(@Json(name = "data") val data: T,
+						 @Json(name = "errorCode") val errorCode: Int,
+						 @Json(name = "errorMsg") val errorMsg: String)
 
 data class ArticleResponse(
 		@Json(name = "data") val data: ArticleResponseBody,
@@ -19,7 +22,7 @@ data class ArticleResponse(
 
 data class ArticleResponseBody(
 		@Json(name = "curPage") val curPage: Int,
-		@Json(name = "datas") val datas: List<Article>,
+		@Json(name = "datas") val datas: MutableList<Article>,
 		@Json(name = "offset") val offset: Int,
 		@Json(name = "over") val over: Boolean,
 		@Json(name = "pageCount") val pageCount: Int,

@@ -1,6 +1,13 @@
 package cn.onlyloveyd.wanandroidclient.http
 
+import cn.onlyloveyd.wanandroidclient.BuildConfig
+import cn.onlyloveyd.wanandroidclient.bean.ArticleResponse
+import io.reactivex.Observable
+import io.reactivex.Observer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -14,35 +21,61 @@ import java.util.concurrent.TimeUnit
  * 博   客: https://onlyloveyd.cn
  * 描   述：
  */
-class Retrofitance() {
-    private val retrofit: Retrofit
-    private val okHttpClient : OkHttpClient
-    private val wanAndroidAPI : WanAndroidAPI
+class Retrofitance private constructor(){
 
-    init {
-        val httpClientBuilder = OkHttpClient.Builder()
-        httpClientBuilder.connectTimeout(DEFAULT_TIMEOUT.toLong(), TimeUnit.SECONDS)
-        okHttpClient = httpClientBuilder.build()
+    private val DEFAULT_TIMEOUT: Long = 15
+    private val BASE_URL: String = "http://www.wanandroid.com/"
 
-        retrofit = Retrofit.Builder().client(okHttpClient)
-                .addConverterFactory(MoshiConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .baseUrl(BASE_URL)
+    var retrofit: Retrofit = initRetrofit()
+
+
+    private object Holder {
+        val INSTANCE = Retrofitance()
+        val WANANDROIDAPI = INSTANCE.retrofit.create(WanAndroidAPI::class.java)
+    }
+    companion object{
+        val instance:Retrofitance by lazy { Holder.INSTANCE }
+        val wanAndroidAPI :WanAndroidAPI by lazy { Holder.WANANDROIDAPI }
+    }
+    private fun initRetrofit(): Retrofit {
+        val interceptor = HttpLoggingInterceptor()
+        if (BuildConfig.DEBUG)
+            interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+        else
+            interceptor.setLevel(HttpLoggingInterceptor.Level.NONE)
+
+        val client = OkHttpClient.Builder()
+                .addInterceptor(interceptor)
+                .retryOnConnectionFailure(true)
+                .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
+                .readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .build()
 
-        wanAndroidAPI = retrofit.create(WanAndroidAPI::class.java)
+        return  Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .client(client)
+                .addConverterFactory(MoshiConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .build()
     }
 
-    //在访问HttpMethods时创建单例
-    private object SingletonHolder {
-        val INSTANCE = Retrofitance()
-    }
-    companion object {
-        val BASE_URL = "http://www.wanandroid.com/"
-        private val DEFAULT_TIMEOUT = 5
-        //获取单例
-        val instance: Retrofitance
-            get() = SingletonHolder.INSTANCE
+    private fun createWanAndroidAPI():WanAndroidAPI{
+        return retrofit.create(WanAndroidAPI::class.java)
     }
 
+//    fun getArticles(subscriber: Observer<ArticleResponse>, pageNum:Int) {
+////        wanAndroidAPI.getArticles(pageNum)
+////                .subscribeOn(Schedulers.io())
+////                .unsubscribeOn(Schedulers.io())
+////                .observeOn(AndroidSchedulers.mainThread())
+////                .subscribe(subscriber)
+//        baseOp(subscriber, wanAndroidAPI.getArticles(pageNum) )
+//    }
+//
+//    private fun <T> baseOp(subscriber: Observer<T>, observable: Observable<T>) {
+//        observable.subscribeOn(Schedulers.io())
+//                .unsubscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(subscriber)
+//    }
 }

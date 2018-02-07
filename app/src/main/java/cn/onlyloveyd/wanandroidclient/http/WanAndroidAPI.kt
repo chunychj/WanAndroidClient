@@ -16,10 +16,14 @@ import retrofit2.http.Path
  */
 interface WanAndroidAPI {
     @GET("article/list/{pageNum}/json")
-    fun getArticles(@Path("pageNum") pageNum:Int) : Observable<ArticleResponse>
+    fun getArticles(@Path("pageNum") pageNum:Int) : Observable<HttpResult<ArticleResponseBody>>
+
+
+    @GET("tree/json")
+    fun getKnowledgeTrees() : Observable<HttpResult<List<KnowledgeTreeBody>>>
 
     @GET("banner/json")
-    fun getBanners() : Observable<BannerResponse>
+    fun getBanners() : Observable<HttpResult<Banner>>
 
     @GET("hotkey/json")
     fun getHotKeys() : Observable<HotKeyResponse>
@@ -27,8 +31,6 @@ interface WanAndroidAPI {
     @GET("friend/json")
     fun getFriendWebsites() : Observable<FriendResponse>
 
-    @GET("tree/json")
-    fun getKnowledgeTrees() : Observable<KnowledgeTreeResponse>
 
     @GET("article/list/{pageNum}/json?cid={cid}")
     fun getKnowledgeTreeArticles(@Path("pageNum") pageNum: Int, @Path("cid") cid: Int) : Observable<ArticleResponse>

@@ -8,11 +8,10 @@ import android.view.ViewGroup
 import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout
 import cn.onlyloveyd.wanandroidclient.R
-import cn.onlyloveyd.wanandroidclient.adapter.ArticlesAdapter
-import cn.onlyloveyd.wanandroidclient.bean.Article
-import cn.onlyloveyd.wanandroidclient.bean.ArticleResponse
+import cn.onlyloveyd.wanandroidclient.adapter.KnowledgeTreeAdapter
 import cn.onlyloveyd.wanandroidclient.bean.ArticleResponseBody
 import cn.onlyloveyd.wanandroidclient.bean.HttpResult
+import cn.onlyloveyd.wanandroidclient.bean.KnowledgeTreeBody
 import cn.onlyloveyd.wanandroidclient.http.Retrofitance
 import com.orhanobut.logger.Logger
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -21,20 +20,18 @@ import kotlinx.android.synthetic.main.fragment_article.*
 import me.yokeyword.fragmentation.SupportFragment
 
 /**
- * 文 件 名: ArticleFragment
- * 创 建 人: 易冬
- * 创建日期: 2018/2/6 20:36
- * 邮   箱: onlyloveyd@gmail.com
- * 博   客: https://onlyloveyd.cn
+ * 文 件 名: KnowledgeTreeFragment
+ * 创建日期: 2018/2/7 10:50
+ * 邮   箱: yidong@gz.csg.cn
  * 描   述：
+ * @author Mraz
  */
-class ArticleFragment : SupportFragment(), BGARefreshLayout.BGARefreshLayoutDelegate {
-    private var index = 0
-    private var pageCount = 0
-    private val datas = mutableListOf<Article>()
+class KnowledgeTreeFragment:SupportFragment(), BGARefreshLayout.BGARefreshLayoutDelegate {
 
-    private val articleAdapter: ArticlesAdapter by lazy {
-        ArticlesAdapter(context, datas)
+    private val datas = mutableListOf<KnowledgeTreeBody>()
+
+    private val knowledgeTreeAdapter: KnowledgeTreeAdapter by lazy {
+        KnowledgeTreeAdapter(context, datas)
     }
     private val linearLayoutManager: LinearLayoutManager by lazy {
         LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
@@ -66,7 +63,7 @@ class ArticleFragment : SupportFragment(), BGARefreshLayout.BGARefreshLayoutDele
 
     private fun initRvContent() {
         rv_content.layoutManager = linearLayoutManager
-        rv_content.adapter = articleAdapter
+        rv_content.adapter = knowledgeTreeAdapter
     }
 
     private fun initBGAData() {
@@ -74,25 +71,22 @@ class ArticleFragment : SupportFragment(), BGARefreshLayout.BGARefreshLayoutDele
     }
 
     override fun onBGARefreshLayoutBeginLoadingMore(refreshLayout: BGARefreshLayout?): Boolean {
-        getArticles(0)
-        return true
+        //getKnowledgeTree()
+        return false
     }
 
     override fun onBGARefreshLayoutBeginRefreshing(refreshLayout: BGARefreshLayout?) {
-        getArticles(0)
+        getKnowledgeTree()
     }
 
-    private fun getArticles(pageNum:Int) {
-        System.err.println("yidong -- getArticle = " + pageNum)
-        Retrofitance.wanAndroidAPI.getArticles(pageNum)
+    private fun getKnowledgeTree() {
+        Retrofitance.wanAndroidAPI.getKnowledgeTrees()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    t: HttpResult<ArticleResponseBody> ->
-                    Logger.d("t = " + t?.data.toString())
-                    System.err.println("yidong -- getArticle = " + t?.data.toString())
-                    t.data.datas?.let {
-                        articleAdapter.run {
+                    t: HttpResult<List<KnowledgeTreeBody>> ->
+                    t.data?.let {
+                        knowledgeTreeAdapter.run {
                             replaceData(it)
                             loadMoreComplete()
                             loadMoreEnd()
