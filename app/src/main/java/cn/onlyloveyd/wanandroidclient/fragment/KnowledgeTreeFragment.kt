@@ -9,7 +9,6 @@ import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout
 import cn.onlyloveyd.wanandroidclient.R
 import cn.onlyloveyd.wanandroidclient.adapter.KnowledgeTreeAdapter
-import cn.onlyloveyd.wanandroidclient.bean.ArticleResponseBody
 import cn.onlyloveyd.wanandroidclient.bean.HttpResult
 import cn.onlyloveyd.wanandroidclient.bean.KnowledgeTreeBody
 import cn.onlyloveyd.wanandroidclient.http.Retrofitance

@@ -18,7 +18,6 @@ interface WanAndroidAPI {
     @GET("article/list/{pageNum}/json")
     fun getArticles(@Path("pageNum") pageNum:Int) : Observable<HttpResult<ArticleResponseBody>>
 
-
     @GET("tree/json")
     fun getKnowledgeTrees() : Observable<HttpResult<List<KnowledgeTreeBody>>>
 
@@ -35,6 +34,5 @@ interface WanAndroidAPI {
     @GET("article/list/{pageNum}/json?cid={cid}")
     fun getKnowledgeTreeArticles(@Path("pageNum") pageNum: Int, @Path("cid") cid: Int) : Observable<ArticleResponse>
 
-//    @POST("/article/query/{pageNum}/json")
 
 }

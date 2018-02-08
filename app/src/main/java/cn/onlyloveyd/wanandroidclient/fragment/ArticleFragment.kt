@@ -74,8 +74,7 @@ class ArticleFragment : SupportFragment(), BGARefreshLayout.BGARefreshLayoutDele
     }
 
     override fun onBGARefreshLayoutBeginLoadingMore(refreshLayout: BGARefreshLayout?): Boolean {
-        getArticles(0)
-        return true
+        return false
     }
 
     override fun onBGARefreshLayoutBeginRefreshing(refreshLayout: BGARefreshLayout?) {
@@ -83,14 +82,12 @@ class ArticleFragment : SupportFragment(), BGARefreshLayout.BGARefreshLayoutDele
     }
 
     private fun getArticles(pageNum:Int) {
-        System.err.println("yidong -- getArticle = " + pageNum)
         Retrofitance.wanAndroidAPI.getArticles(pageNum)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     t: HttpResult<ArticleResponseBody> ->
                     Logger.d("t = " + t?.data.toString())
-                    System.err.println("yidong -- getArticle = " + t?.data.toString())
                     t.data.datas?.let {
                         articleAdapter.run {
                             replaceData(it)

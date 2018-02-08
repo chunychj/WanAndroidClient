@@ -30,6 +30,7 @@ class KnowledgeTreeAdapter(private val context: Context?, datas: MutableList<Kno
         helper.setText(R.id.tv_knowledge_parent, item.name)
 
         val flexlayout = helper.getView<FlexboxLayout>(R.id.flex_knowledge)
+        flexlayout.removeAllViews()
         val children = item.children
         if (children.isNotEmpty()) {
             for ((index, value) in children.withIndex()) {

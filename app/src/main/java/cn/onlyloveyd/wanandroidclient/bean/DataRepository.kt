@@ -100,13 +100,13 @@ data class Friend(
 )
 
 data class KnowledgeTreeResponse(
-		@Json(name = "data") val data: List<KnowledgeTreeBody>,
+		@Json(name = "data") val data: MutableList<KnowledgeTreeBody>,
 		@Json(name = "errorCode") val errorCode: Int,
 		@Json(name = "errorMsg") val errorMsg: String
 )
 
 data class KnowledgeTreeBody(
-		@Json(name = "children") val children: List<Knowledge>,
+		@Json(name = "children") val children: MutableList<Knowledge>,
 		@Json(name = "courseId") val courseId: Int,
 		@Json(name = "id") val id: Int,
 		@Json(name = "name") val name: String,

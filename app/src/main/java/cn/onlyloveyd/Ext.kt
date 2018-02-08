@@ -19,7 +19,6 @@ object Ext {
             R.drawable.bg_tag_five,
             R.drawable.bg_tag_six,
             R.drawable.bg_tag_seven,
-            R.drawable.bg_tag_eight,
-            R.drawable.bg_tag_nine
+            R.drawable.bg_tag_eight
     )
 }

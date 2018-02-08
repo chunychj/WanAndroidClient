@@ -59,10 +59,6 @@ class Retrofitance private constructor(){
                 .build()
     }
 
-    private fun createWanAndroidAPI():WanAndroidAPI{
-        return retrofit.create(WanAndroidAPI::class.java)
-    }
-
 //    fun getArticles(subscriber: Observer<ArticleResponse>, pageNum:Int) {
 ////        wanAndroidAPI.getArticles(pageNum)
 ////                .subscribeOn(Schedulers.io())

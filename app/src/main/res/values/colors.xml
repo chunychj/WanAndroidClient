@@ -46,4 +46,8 @@
     <color name="tag_video">#a6c7b2</color>
 
     <color name="empty_data_text">#bfbfbf</color>
+
+    <color name="tab_checked">#FF3498db</color>
+    <color name="tab_unchecked">#FF666666</color>
+    <color name="gray_bg">#aaebebeb</color>
 </resources>
