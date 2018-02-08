@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import cn.onlyloveyd.wanandroidclient.fragment.ArticleFragment
+import cn.onlyloveyd.wanandroidclient.fragment.HotFragment
 import cn.onlyloveyd.wanandroidclient.fragment.KnowledgeTreeFragment
 import cn.onlyloveyd.wanandroidclient.fragment.MeFragment
 import kotlinx.android.synthetic.main.activity_home.*
@@ -66,7 +67,7 @@ class HomeActivity : SupportActivity() {
     private fun initFragments() {
         val articleFragment = ArticleFragment()
         val knowledgeTreeFragment = KnowledgeTreeFragment()
-        val hotFragment = ArticleFragment()
+        val hotFragment = HotFragment()
         val meFragment = MeFragment()
         fragments.add(articleFragment)
         fragments.add(knowledgeTreeFragment)

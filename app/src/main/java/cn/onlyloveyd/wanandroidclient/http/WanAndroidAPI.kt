@@ -22,7 +22,7 @@ interface WanAndroidAPI {
     fun getKnowledgeTrees() : Observable<HttpResult<List<KnowledgeTreeBody>>>
 
     @GET("banner/json")
-    fun getBanners() : Observable<HttpResult<Banner>>
+    fun getBanners() : Observable<HttpResult<List<Banner>>>
 
     @GET("hotkey/json")
     fun getHotKeys() : Observable<HotKeyResponse>
