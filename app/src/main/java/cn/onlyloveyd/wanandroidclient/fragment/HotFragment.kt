@@ -6,24 +6,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import cn.onlyloveyd.wanandroidclient.R
-import kotlinx.android.synthetic.main.fragment_hot.*
-import me.yokeyword.fragmentation.SupportFragment
-import java.util.Arrays.asList
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.TransformationUtils.centerCrop
-import cn.bingoogolapple.bgabanner.BGABanner
-import cn.onlyloveyd.wanandroidclient.bean.Article
+import cn.onlyloveyd.wanandroidclient.adapter.FriendWebsiteAdapter
 import cn.onlyloveyd.wanandroidclient.bean.Banner
+import cn.onlyloveyd.wanandroidclient.bean.Friend
 import cn.onlyloveyd.wanandroidclient.bean.HttpResult
 import cn.onlyloveyd.wanandroidclient.http.Retrofitance
+import com.bumptech.glide.Glide
+import com.google.android.flexbox.AlignItems
+import com.google.android.flexbox.FlexDirection
+import com.google.android.flexbox.FlexWrap
+import com.google.android.flexbox.FlexboxLayoutManager
 import com.orhanobut.logger.Logger
-import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import java.util.*
-import cn.bingoogolapple.bgabanner.BGALocalImageSize
-
-
+import kotlinx.android.synthetic.main.fragment_hot.*
+import me.yokeyword.fragmentation.SupportFragment
 
 
 /**
@@ -33,8 +30,14 @@ import cn.bingoogolapple.bgabanner.BGALocalImageSize
  * 描   述：
  * @author Mraz
  */
-class HotFragment:SupportFragment() {
-    private val datas = mutableListOf<Banner>()
+class HotFragment : SupportFragment() {
+    private val friendDatas = mutableListOf<Friend>()
+    private val friendAdapter by lazy {
+        FriendWebsiteAdapter(context, friendDatas)
+    }
+    private val flexboxlm by lazy {
+        FlexboxLayoutManager()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_hot, null, false)
@@ -43,11 +46,18 @@ class HotFragment:SupportFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        flexboxlm.flexDirection = FlexDirection.ROW
+        //设置是否换行
+        flexboxlm.flexWrap = FlexWrap.WRAP
+        flexboxlm.alignItems = AlignItems.STRETCH
+        rv_hot_website.adapter = friendAdapter
+        rv_hot_website.layoutManager = flexboxlm
+
+
         Retrofitance.wanAndroidAPI.getBanners()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    t : HttpResult<List<Banner>> ->
+                .subscribe({ t: HttpResult<List<Banner>> ->
                     t.data?.let {
                         bgabanner.setAdapter { banner, itemView, model, position ->
                             context?.let {
@@ -58,13 +68,28 @@ class HotFragment:SupportFragment() {
                         }
                         bgabanner.setData(it.map { it.imagePath }, it.map { it.title })
                     }
-                },{
-                    error ->
+                }, { error ->
                     error.printStackTrace()
-                },{
+                }, {
                     Logger.d("onComplete")
-                },{
+                }, {
                     Logger.d("onStart")
+                })
+
+        Retrofitance.wanAndroidAPI.getFriendWebsites()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ t: HttpResult<List<Friend>> ->
+                    t.data?.let {
+                        friendAdapter.run {
+                            replaceData(it)
+                            loadMoreComplete()
+                            loadMoreEnd()
+                            setEnableLoadMore(false)
+                        }
+                    }
+                }, { error ->
+                    error.printStackTrace()
                 })
     }
 

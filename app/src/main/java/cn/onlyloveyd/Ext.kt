@@ -21,4 +21,15 @@ object Ext {
             R.drawable.bg_tag_seven,
             R.drawable.bg_tag_eight
     )
+
+    val HollowBackgroundRepository = mutableListOf(
+            R.drawable.hollow_tag_one,
+            R.drawable.hollow_tag_two,
+            R.drawable.hollow_tag_three,
+            R.drawable.hollow_tag_four,
+            R.drawable.hollow_tag_five,
+            R.drawable.hollow_tag_six,
+            R.drawable.hollow_tag_seven,
+            R.drawable.hollow_tag_eight
+    )
 }

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+          android:id="@+id/tv_friend_website"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="4dp"
+          android:layout_marginBottom="4dp"
+          android:layout_marginLeft="4dp"
+          android:layout_marginRight="4dp"
+          android:paddingTop="4dp"
+          android:paddingBottom="4dp"
+          android:paddingLeft="8dp"
+          android:paddingRight="8dp"
+          android:background="@drawable/hollow_tag_one"
+          android:text="Helloworld"
+          android:gravity="center"
+          android:textColor="@android:color/black">
+</TextView>

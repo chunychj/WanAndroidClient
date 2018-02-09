@@ -28,7 +28,7 @@ interface WanAndroidAPI {
     fun getHotKeys() : Observable<HotKeyResponse>
 
     @GET("friend/json")
-    fun getFriendWebsites() : Observable<FriendResponse>
+    fun getFriendWebsites() : Observable<HttpResult<List<Friend>>>
 
 
     @GET("article/list/{pageNum}/json?cid={cid}")

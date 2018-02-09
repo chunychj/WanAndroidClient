@@ -67,11 +67,10 @@
     <Space
         android:layout_width="match_parent"
         android:layout_height="2dp"/>
-    <com.google.android.flexbox.FlexboxLayout
-        android:id="@+id/flexbox_friend"
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_hot_website"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:flexDirection="row"
-        app:flexWrap="wrap"/>
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>
