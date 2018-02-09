@@ -45,15 +45,20 @@ class HotFragment : SupportFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        refresh_layout.setOnClickListener { _:View? ->
+            getFriends()
+        }
         flexboxlm.flexDirection = FlexDirection.ROW
-        //设置是否换行
         flexboxlm.flexWrap = FlexWrap.WRAP
         flexboxlm.alignItems = AlignItems.STRETCH
         rv_hot_website.adapter = friendAdapter
         rv_hot_website.layoutManager = flexboxlm
 
+        getBanners()
+        getFriends()
+    }
 
+    private fun getBanners() {
         Retrofitance.wanAndroidAPI.getBanners()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -76,6 +81,11 @@ class HotFragment : SupportFragment() {
                     Logger.d("onStart")
                 })
 
+    }
+
+    private fun getFriends() {
+        animation_view.visibility = View.VISIBLE
+        rv_hot_website.visibility = View.GONE
         Retrofitance.wanAndroidAPI.getFriendWebsites()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -90,7 +100,15 @@ class HotFragment : SupportFragment() {
                     }
                 }, { error ->
                     error.printStackTrace()
+                },{
+                    Logger.d("onComplete")
+                    animation_view.cancelAnimation()
+                    animation_view.visibility = View.GONE
+                    rv_hot_website.visibility = View.VISIBLE
+                },{
+                    Logger.d("onStart")
                 })
+        animation_view.playAnimation()
     }
 
 }

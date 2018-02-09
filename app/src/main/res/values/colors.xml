@@ -50,4 +50,6 @@
     <color name="tab_checked">#FF3498db</color>
     <color name="tab_unchecked">#FF666666</color>
     <color name="gray_bg">#aaebebeb</color>
+
+    <color name="iron">#CCCCCC</color>
 </resources>
