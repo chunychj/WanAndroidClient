@@ -1,17 +1,30 @@
-package cn.onlyloveyd.wanandroidclient
+package cn.onlyloveyd.wanandroidclient.fragment
 
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
-import cn.onlyloveyd.wanandroidclient.fragment.ArticleFragment
-import cn.onlyloveyd.wanandroidclient.fragment.HotFragment
-import cn.onlyloveyd.wanandroidclient.fragment.KnowledgeTreeFragment
-import cn.onlyloveyd.wanandroidclient.fragment.MeFragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import cn.onlyloveyd.wanandroidclient.R
 import kotlinx.android.synthetic.main.activity_home.*
-import me.yokeyword.fragmentation.SupportActivity
+import me.yokeyword.fragmentation.SupportFragment
 
-class HomeActivity : SupportActivity() {
+/**
+ * 文 件 名: HomeFragment
+ * 创建日期: 2018/2/11 07:54
+ * 邮   箱: yidong@gz.csg.cn
+ * 描   述：
+ * @author Mraz
+ */
+class HomeFragment : SupportFragment() {
+    companion object {
+        internal fun newInstance(): HomeFragment {
+            return HomeFragment()
+        }
+    }
+
     private val fragments = mutableListOf<Fragment>()
     private var lastShowFragment = 0
 
@@ -50,9 +63,12 @@ class HomeActivity : SupportActivity() {
         false
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.activity_home, null, false)
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         var states = arrayOf(intArrayOf(-android.R.attr.state_checked), intArrayOf(android.R.attr.state_checked))
         var colors = intArrayOf(resources.getColor(R.color.tab_unchecked), resources.getColor(R.color.tab_checked))
@@ -62,6 +78,7 @@ class HomeActivity : SupportActivity() {
 
         initFragments()
     }
+
 
 
     private fun initFragments() {
@@ -74,19 +91,23 @@ class HomeActivity : SupportActivity() {
         fragments.add(hotFragment)
         fragments.add(meFragment)
         lastShowFragment = 0
-        supportFragmentManager
-                .beginTransaction()
-                .add(R.id.contentPanel, articleFragment)
-                .show(articleFragment)
-                .commit()
+        fragmentManager?.let {
+            it
+                    .beginTransaction()
+                    .add(R.id.contentPanel, articleFragment)
+                    .show(articleFragment)
+                    .commit()
+        }
     }
 
     private fun switchFragment(lastIndex: Int, index: Int) {
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.hide(fragments[lastIndex])
-        if (!fragments[index].isAdded) {
-            transaction.add(R.id.contentPanel, fragments[index])
+        val transaction = fragmentManager?.beginTransaction()
+        transaction?.let {
+            it.hide(fragments[lastIndex])
+            if (!fragments[index].isAdded) {
+                it.add(R.id.contentPanel, fragments[index])
+            }
+            it.show(fragments[index]).commitAllowingStateLoss()
         }
-        transaction.show(fragments[index]).commitAllowingStateLoss()
     }
 }

@@ -13,13 +13,7 @@ import com.squareup.moshi.Json
 data class HttpResult<T>(@Json(name = "data") val data: T,
 						 @Json(name = "errorCode") val errorCode: Int,
 						 @Json(name = "errorMsg") val errorMsg: String)
-
-data class ArticleResponse(
-		@Json(name = "data") val data: ArticleResponseBody,
-		@Json(name = "errorCode") val errorCode: Int,
-		@Json(name = "errorMsg") val errorMsg: String
-)
-
+//文章
 data class ArticleResponseBody(
 		@Json(name = "curPage") val curPage: Int,
 		@Json(name = "datas") val datas: MutableList<Article>,
@@ -30,6 +24,7 @@ data class ArticleResponseBody(
 		@Json(name = "total") val total: Int
 )
 
+//文章
 data class Article(
 		@Json(name = "apkLink") val apkLink: String,
 		@Json(name = "author") val author: String,
@@ -50,13 +45,7 @@ data class Article(
 		@Json(name = "zan") val zan: Int
 )
 
-
-data class BannerResponse(
-		@Json(name = "data") val data: List<Banner>,
-		@Json(name = "errorCode") val errorCode: Int,
-		@Json(name = "errorMsg") val errorMsg: String
-)
-
+//横幅
 data class Banner(
 		@Json(name = "desc") val desc: String,
 		@Json(name = "id") val id: Int,
@@ -68,13 +57,6 @@ data class Banner(
 		@Json(name = "url") val url: String
 )
 
-
-data class HotKeyResponse(
-		@Json(name = "data") val data: List<HotKey>,
-		@Json(name = "errorCode") val errorCode: Int,
-		@Json(name = "errorMsg") val errorMsg: String
-)
-
 data class HotKey(
 		@Json(name = "id") val id: Int,
 		@Json(name = "link") val link: String,
@@ -83,13 +65,7 @@ data class HotKey(
 		@Json(name = "visible") val visible: Int
 )
 
-
-data class FriendResponse(
-		@Json(name = "data") val data: List<Friend>,
-		@Json(name = "errorCode") val errorCode: Int,
-		@Json(name = "errorMsg") val errorMsg: String
-)
-
+//常用网站
 data class Friend(
 		@Json(name = "icon") val icon: String,
 		@Json(name = "id") val id: Int,
@@ -99,12 +75,7 @@ data class Friend(
 		@Json(name = "visible") val visible: Int
 )
 
-data class KnowledgeTreeResponse(
-		@Json(name = "data") val data: MutableList<KnowledgeTreeBody>,
-		@Json(name = "errorCode") val errorCode: Int,
-		@Json(name = "errorMsg") val errorMsg: String
-)
-
+//知识体系
 data class KnowledgeTreeBody(
 		@Json(name = "children") val children: MutableList<Knowledge>,
 		@Json(name = "courseId") val courseId: Int,
@@ -122,5 +93,33 @@ data class Knowledge(
 		@Json(name = "name") val name: String,
 		@Json(name = "order") val order: Int,
 		@Json(name = "parentChapterId") val parentChapterId: Int,
+		@Json(name = "visible") val visible: Int
+)
+
+
+data class LoginResponse(
+		@Json(name = "data") val data: LoginData,
+		@Json(name = "errorCode") val errorCode: Int,
+		@Json(name = "errorMsg") val errorMsg: String
+)
+
+data class LoginData(
+		@Json(name = "collectIds") val collectIds: List<Any>,
+		@Json(name = "icon") val icon: String,
+		@Json(name = "id") val id: Int,
+		@Json(name = "password") val password: String,
+		@Json(name = "type") val type: Int,
+		@Json(name = "username") val username: String
+)
+
+//收藏网站
+data class CollectionWebsiteResponse(
+		@Json(name = "desc") val desc: String,
+		@Json(name = "icon") val icon: String,
+		@Json(name = "id") val id: Int,
+		@Json(name = "link") val link: String,
+		@Json(name = "name") val name: String,
+		@Json(name = "order") val order: Int,
+		@Json(name = "userId") val userId: Int,
 		@Json(name = "visible") val visible: Int
 )

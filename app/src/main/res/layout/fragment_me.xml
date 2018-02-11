@@ -103,7 +103,8 @@
         android:id="@+id/exit_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white">
+        android:background="@android:color/white"
+        android:visibility="gone">
         <TextView
             android:id="@+id/tv_exit"
             android:layout_width="match_parent"

@@ -10,7 +10,6 @@ import cn.bingoogolapple.refreshlayout.BGARefreshLayout
 import cn.onlyloveyd.wanandroidclient.R
 import cn.onlyloveyd.wanandroidclient.adapter.ArticlesAdapter
 import cn.onlyloveyd.wanandroidclient.bean.Article
-import cn.onlyloveyd.wanandroidclient.bean.ArticleResponse
 import cn.onlyloveyd.wanandroidclient.bean.ArticleResponseBody
 import cn.onlyloveyd.wanandroidclient.bean.HttpResult
 import cn.onlyloveyd.wanandroidclient.http.Retrofitance
@@ -88,7 +87,7 @@ class ArticleFragment : SupportFragment(), BGARefreshLayout.BGARefreshLayoutDele
                 .subscribe({
                     t: HttpResult<ArticleResponseBody> ->
                     Logger.d("t = " + t?.data.toString())
-                    t.data.datas?.let {
+                    t.data.datas.let {
                         articleAdapter.run {
                             replaceData(it)
                             loadMoreComplete()

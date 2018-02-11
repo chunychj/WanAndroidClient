@@ -5,7 +5,7 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.widget.TextView
-import cn.onlyloveyd.Ext
+import cn.onlyloveyd.wanandroidclient.ext.Ext
 import cn.onlyloveyd.wanandroidclient.R
 import cn.onlyloveyd.wanandroidclient.bean.KnowledgeTreeBody
 import com.chad.library.adapter.base.BaseQuickAdapter

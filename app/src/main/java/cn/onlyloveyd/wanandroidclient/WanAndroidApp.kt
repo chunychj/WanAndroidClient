@@ -1,6 +1,7 @@
 package cn.onlyloveyd.wanandroidclient
 
 import android.app.Application
+import cn.onlyloveyd.wanandroidclient.ext.Preference
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
@@ -27,5 +28,6 @@ class WanAndroidApp : Application() {
                 return BuildConfig.DEBUG
             }
         })
+        Preference.setContext(applicationContext)
     }
 }
