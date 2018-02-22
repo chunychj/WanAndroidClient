@@ -4,12 +4,13 @@ import android.content.Context
 import android.widget.TextView
 import cn.onlyloveyd.wanandroidclient.ext.Ext
 import cn.onlyloveyd.wanandroidclient.R
+import cn.onlyloveyd.wanandroidclient.activity.WebActivity
 import cn.onlyloveyd.wanandroidclient.bean.Friend
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.google.android.flexbox.FlexboxLayoutManager
 import org.jetbrains.anko.backgroundResource
-
+import org.jetbrains.anko.startActivity
 
 /**
  * 文 件 名: FriendWebsiteAdapter
@@ -29,6 +30,11 @@ class FriendWebsiteAdapter(private val context: Context?, datas: MutableList<Fri
             if (lp is FlexboxLayoutManager.LayoutParams) {
                 val flexboxlp = it.layoutParams as FlexboxLayoutManager.LayoutParams
                 flexboxlp.flexGrow = 1.0f
+            }
+        }
+        helper.itemView.setOnClickListener { _->
+            context?.let {
+                it.startActivity<WebActivity>("URL" to  item.link)
             }
         }
     }

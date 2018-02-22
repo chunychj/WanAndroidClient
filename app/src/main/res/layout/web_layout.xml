@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<cn.bingoogolapple.refreshlayout.BGARefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bgarefreshlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <WebView
+        android:id="@+id/webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingTop="?attr/actionBarSize"/>
+</cn.bingoogolapple.refreshlayout.BGARefreshLayout>

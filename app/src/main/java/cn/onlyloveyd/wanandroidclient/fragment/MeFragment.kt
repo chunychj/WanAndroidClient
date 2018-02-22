@@ -1,7 +1,6 @@
 package cn.onlyloveyd.wanandroidclient.fragment
 
 import android.app.AlertDialog
-import android.app.DialogFragment
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
@@ -53,20 +52,18 @@ class MeFragment : SupportFragment() {
                         it.printStackTrace()
                     } )
         }
-//        exit_layout.setOnClickListener { _->
-//            Preference.clear()
-//            tv_username.text = getString(R.string.logout)
-//            avatar_layout.isClickable = true
-//            exit_layout.visibility = View.GONE
-//        }
+
         exit_layout.setOnClickListener { _ ->
-            val dialog = AlertDialog.Builder(context)
-            dialog.setMessage("确定推出吗")
-            dialog.setPositiveButton("确定", DialogInterface.OnClickListener { dialog, which ->
-
+            val dialog = AlertDialog.Builder(context,R.style.AppTheme_Dark_Dialog)
+            dialog.setMessage("确定退出嘛?")
+            dialog.setPositiveButton("确定", { _, _ ->
+                Preference.clear()
+                tv_username.text = getString(R.string.logout)
+                avatar_layout.isClickable = true
+                exit_layout.visibility = View.GONE
             })
-            dialog.setNegativeButton("确定", DialogInterface.OnClickListener { dialog, which ->
-
+            dialog.setNegativeButton("取消", { dialog, _ ->
+                dialog.dismiss()
             })
                     .show()
 

@@ -5,10 +5,12 @@ import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
 import cn.onlyloveyd.wanandroidclient.R
+import cn.onlyloveyd.wanandroidclient.activity.WebActivity
 import cn.onlyloveyd.wanandroidclient.bean.Article
 import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import org.jetbrains.anko.startActivity
 
 /**
  * 文 件 名: ArticlesAdapter
@@ -38,6 +40,12 @@ class ArticlesAdapter(private val context: Context?, datas: MutableList<Article>
         } else {
             helper.getView<ImageView>(R.id.iv_article_thumbnail)
                     .visibility = View.GONE
+        }
+
+        helper.itemView.setOnClickListener { _->
+            context?.let {
+                it.startActivity<WebActivity>("URL" to item.link)
+            }
         }
     }
 

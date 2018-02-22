@@ -73,35 +73,43 @@ class ArticleFragment : SupportFragment(), BGARefreshLayout.BGARefreshLayoutDele
     }
 
     override fun onBGARefreshLayoutBeginLoadingMore(refreshLayout: BGARefreshLayout?): Boolean {
-        return false
+        if (pageCount != 0 && index > pageCount) {
+            return false
+        }
+        getArticles(++index)
+        return true
     }
 
     override fun onBGARefreshLayoutBeginRefreshing(refreshLayout: BGARefreshLayout?) {
         getArticles(0)
     }
 
-    private fun getArticles(pageNum:Int) {
+    private fun getArticles(pageNum: Int) {
         Retrofitance.wanAndroidAPI.getArticles(pageNum)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    t: HttpResult<ArticleResponseBody> ->
-                    Logger.d("t = " + t?.data.toString())
+                .subscribe({ t: HttpResult<ArticleResponseBody> ->
+                    Logger.d("t = " + t.data.toString())
+                    if (pageNum == 0) {
+                        pageCount = t.data.pageCount
+                    }
                     t.data.datas.let {
                         articleAdapter.run {
-                            replaceData(it)
-                            loadMoreComplete()
-                            loadMoreEnd()
-                            setEnableLoadMore(false)
+                            if (bgarefreshlayout.currentRefreshStatus == BGARefreshLayout.RefreshStatus.REFRESHING) {
+                                replaceData(it)
+                                bgarefreshlayout.endRefreshing()
+                            }
+                            if (bgarefreshlayout.isLoadingMore) {
+                                addData(it)
+                                bgarefreshlayout.endLoadingMore()
+                            }
                         }
                     }
-                    bgarefreshlayout.endRefreshing()
-                },{
-                    error ->
+                }, { error ->
                     error.printStackTrace()
-                },{
+                }, {
                     Logger.d("onComplete")
-                },{
+                }, {
                     Logger.d("onStart")
                 })
 
