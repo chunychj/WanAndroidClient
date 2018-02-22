@@ -15,19 +15,19 @@ import retrofit2.http.*
  */
 interface WanAndroidAPI {
     @GET("article/list/{pageNum}/json")
-    fun getArticles(@Path("pageNum") pageNum:Int) : Observable<HttpResult<ArticleResponseBody>>
+    fun getArticles(@Path("pageNum") pageNum: Int): Observable<HttpResult<ArticleResponseBody>>
 
     @GET("tree/json")
-    fun getKnowledgeTrees() : Observable<HttpResult<List<KnowledgeTreeBody>>>
+    fun getKnowledgeTrees(): Observable<HttpResult<List<KnowledgeTreeBody>>>
 
     @GET("banner/json")
-    fun getBanners() : Observable<HttpResult<List<Banner>>>
+    fun getBanners(): Observable<HttpResult<List<Banner>>>
 
 //    @GET("hotkey/json")
 //    fun getHotKeys() : Observable<HotKeyResponse>
 
     @GET("friend/json")
-    fun getFriendWebsites() : Observable<HttpResult<List<Friend>>>
+    fun getFriendWebsites(): Observable<HttpResult<List<Friend>>>
 
 
 //    @GET("article/list/{pageNum}/json?cid={cid}")
@@ -36,12 +36,19 @@ interface WanAndroidAPI {
 
     @POST("user/login")
     @FormUrlEncoded
-    fun loginWanAndroid(@Field("username") username : String,
-                        @Field("password") password:String) : Observable<HttpResult<LoginData>>
+    fun loginWanAndroid(@Field("username") username: String,
+                        @Field("password") password: String): Observable<HttpResult<LoginData>>
 
-    //收藏网址列表
-    @GET("lg/collect/usertools/json")
-    fun getCollections():Observable<ResponseBody>
+    @POST("user/register")
+    @FormUrlEncoded
+    fun registerWanAndroid(@Field("username") username: String,
+                           @Field("password") password: String,
+                           @Field("repassword") repassword: String): Observable<HttpResult<LoginData>>
+
+
+    //收藏文章列表
+    @GET("lg/collect/list/{pageNum}/json")
+    fun getCollectionArticles(@Path("pageNum") pageNum: Int): Observable<HttpResult<ArticleResponseBody>>
 
     //收藏站内文章
     @POST("lg/collect/{cid}/json")
@@ -49,23 +56,29 @@ interface WanAndroidAPI {
 
     //收藏站外文章
     @POST("lg/collect/add/json")
-    fun collectOutArticle(@Field("title") title:String,
-                          @Field("author") author:String,
+    fun collectOutArticle(@Field("title") title: String,
+                          @Field("author") author: String,
                           @Field("link") link: String)
+
     //取消收藏文章
     @POST("lg/uncollect/{id}/json")
-    fun cancelCollectionArticle(@Path("id") id:String)
+    fun cancelCollectionArticle(@Path("id") id: String)
+
+    //收藏网址列表
+    @GET("lg/collect/usertools/json")
+    fun getCollectionWebsites(): Observable<ResponseBody>
 
     //收藏网址
     @POST("lg/collect/addtool/json")
-    fun collectWebsite(@Field("name") name:String,
+    fun collectWebsite(@Field("name") name: String,
                        @Field("link") link: String)
 
     //编辑收藏网址
     @POST("lg/collect/updatetool/json")
-    fun editCollectionWebsite(@Field("id") id:Int,
+    fun editCollectionWebsite(@Field("id") id: Int,
                               @Field("name") name: String,
                               @Field("link") link: String)
+
     //删除收藏网址
     @POST("lg/collect/deletetool/json")
     fun deleteCollectionWebsite(@Field("id") id: Int)

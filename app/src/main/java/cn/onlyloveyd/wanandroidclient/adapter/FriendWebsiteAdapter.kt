@@ -2,10 +2,10 @@ package cn.onlyloveyd.wanandroidclient.adapter
 
 import android.content.Context
 import android.widget.TextView
-import cn.onlyloveyd.wanandroidclient.ext.Ext
 import cn.onlyloveyd.wanandroidclient.R
 import cn.onlyloveyd.wanandroidclient.activity.WebActivity
 import cn.onlyloveyd.wanandroidclient.bean.Friend
+import cn.onlyloveyd.wanandroidclient.ext.Ext
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.google.android.flexbox.FlexboxLayoutManager
@@ -32,10 +32,8 @@ class FriendWebsiteAdapter(private val context: Context?, datas: MutableList<Fri
                 flexboxlp.flexGrow = 1.0f
             }
         }
-        helper.itemView.setOnClickListener { _->
-            context?.let {
-                it.startActivity<WebActivity>("URL" to  item.link)
-            }
+        helper.itemView.setOnClickListener { _ ->
+            context?.startActivity<WebActivity>("URL" to item.link)
         }
     }
 }

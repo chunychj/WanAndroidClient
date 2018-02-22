@@ -1,21 +1,19 @@
 package cn.onlyloveyd.wanandroidclient.fragment
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import cn.onlyloveyd.wanandroidclient.R
+import cn.onlyloveyd.wanandroidclient.activity.CollectionsActivity
 import cn.onlyloveyd.wanandroidclient.activity.LoginActivity
 import cn.onlyloveyd.wanandroidclient.ext.Ext
 import cn.onlyloveyd.wanandroidclient.ext.Preference
-import cn.onlyloveyd.wanandroidclient.http.Retrofitance
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_me.*
 import me.yokeyword.fragmentation.SupportFragment
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.support.v4.startActivityForResult
 
 
@@ -42,19 +40,18 @@ class MeFragment : SupportFragment() {
             startActivityForResult<LoginActivity>(Ext.LOGIN_REQUEST_CODE)
         }
 
-        collections_layout.setOnClickListener { _->
-            Retrofitance.wanAndroidAPI.getCollections().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                    .subscribe ( {
-                        it->
-                        System.err.println("yidong -- result = " + it.string())
-                    },{
-                        it->
-                        it.printStackTrace()
-                    } )
+        collections_layout.setOnClickListener { _ ->
+            context?.let {
+                if (isLogin) {
+                    it.startActivity<CollectionsActivity>()
+                } else {
+                    startActivityForResult<LoginActivity>(Ext.LOGIN_REQUEST_CODE)
+                }
+            }
         }
 
         exit_layout.setOnClickListener { _ ->
-            val dialog = AlertDialog.Builder(context,R.style.AppTheme_Dark_Dialog)
+            val dialog = AlertDialog.Builder(context, R.style.AppTheme_Dark_Dialog)
             dialog.setMessage("确定退出嘛?")
             dialog.setPositiveButton("确定", { _, _ ->
                 Preference.clear()
@@ -70,19 +67,20 @@ class MeFragment : SupportFragment() {
 
         }
 
-        about_layout.setOnClickListener { _->
+        about_layout.setOnClickListener { _ ->
 
         }
     }
 
     override fun onResume() {
         super.onResume()
-        if(isLogin){
-            avatar_layout.isClickable =false
+        if (isLogin) {
+            avatar_layout.isClickable = false
             exit_layout.visibility = View.VISIBLE
             tv_username.text = username
         }
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Ext.LOGIN_REQUEST_CODE && resultCode == RESULT_OK) {
@@ -90,7 +88,7 @@ class MeFragment : SupportFragment() {
             System.err.println("yidong -- intent = " + data?.extras.toString())
 
             val username = data?.getStringExtra("username")
-            tv_username.text= username
+            tv_username.text = username
             avatar_layout.isClickable = false
             exit_layout.visibility = View.VISIBLE
         }

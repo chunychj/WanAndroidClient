@@ -4,12 +4,14 @@ import android.content.Context
 import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
+import android.widget.TextView
 import cn.onlyloveyd.wanandroidclient.R
 import cn.onlyloveyd.wanandroidclient.activity.WebActivity
 import cn.onlyloveyd.wanandroidclient.bean.Article
 import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
+import org.jetbrains.anko.share
 import org.jetbrains.anko.startActivity
 
 /**
@@ -27,9 +29,16 @@ class ArticlesAdapter(private val context: Context?, datas: MutableList<Article>
         helper.setText(R.id.tv_article_title, item.title)
                 .setText(R.id.tv_article_date, item.niceDate)
                 .setText(R.id.tv_article_author, item.author)
-                .setText(R.id.tv_article_chapterName, item.chapterName)
 
-        if(!TextUtils.isEmpty(item.envelopePic)) {
+        if (!TextUtils.isEmpty(item.chapterName)) {
+            helper.setText(R.id.tv_article_chapterName, item.chapterName)
+            helper.getView<TextView>(R.id.tv_article_chapterName).visibility = View.VISIBLE
+        } else {
+            helper.getView<TextView>(R.id.tv_article_chapterName).visibility = View.INVISIBLE
+        }
+
+
+        if (!TextUtils.isEmpty(item.envelopePic)) {
             helper.getView<ImageView>(R.id.iv_article_thumbnail)
                     .visibility = View.VISIBLE
             context?.let {
@@ -42,10 +51,16 @@ class ArticlesAdapter(private val context: Context?, datas: MutableList<Article>
                     .visibility = View.GONE
         }
 
-        helper.itemView.setOnClickListener { _->
-            context?.let {
-                it.startActivity<WebActivity>("URL" to item.link)
-            }
+
+
+        helper.itemView.setOnClickListener { _ ->
+            context?.startActivity<WebActivity>("URL" to item.link)
+        }
+
+
+        helper.getView<ImageView>(R.id.iv_like)
+        helper.getView<ImageView>(R.id.iv_share).setOnClickListener {
+            context?.share(item.link)
         }
     }
 

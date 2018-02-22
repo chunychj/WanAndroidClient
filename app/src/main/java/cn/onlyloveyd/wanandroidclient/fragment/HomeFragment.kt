@@ -70,15 +70,14 @@ class HomeFragment : SupportFragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
-        var states = arrayOf(intArrayOf(-android.R.attr.state_checked), intArrayOf(android.R.attr.state_checked))
-        var colors = intArrayOf(resources.getColor(R.color.tab_unchecked), resources.getColor(R.color.tab_checked))
+        val states = arrayOf(intArrayOf(-android.R.attr.state_checked), intArrayOf(android.R.attr.state_checked))
+        val colors = intArrayOf(resources.getColor(R.color.tab_unchecked), resources.getColor(R.color.tab_checked))
         val csl = ColorStateList(states, colors)
         navigation.itemTextColor = csl
         navigation.itemIconTintList = csl
 
         initFragments()
     }
-
 
 
     private fun initFragments() {
@@ -91,13 +90,7 @@ class HomeFragment : SupportFragment() {
         fragments.add(hotFragment)
         fragments.add(meFragment)
         lastShowFragment = 0
-        fragmentManager?.let {
-            it
-                    .beginTransaction()
-                    .add(R.id.contentPanel, articleFragment)
-                    .show(articleFragment)
-                    .commit()
-        }
+        fragmentManager?.beginTransaction()?.add(R.id.contentPanel, articleFragment)?.show(articleFragment)?.commit()
     }
 
     private fun switchFragment(lastIndex: Int, index: Int) {

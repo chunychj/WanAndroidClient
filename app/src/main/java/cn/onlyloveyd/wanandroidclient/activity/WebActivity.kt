@@ -1,7 +1,6 @@
 package cn.onlyloveyd.wanandroidclient.activity
 
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
@@ -10,7 +9,6 @@ import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.KeyEvent
 import android.webkit.WebChromeClient
-import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.LinearLayout
@@ -35,7 +33,7 @@ class WebActivity : AppCompatActivity() {
     private var mTitleTextView: TextView? = null
     private var mAlertDialog: AlertDialog? = null
 
-    private var url:String?=null
+    private var url: String? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -81,16 +79,9 @@ class WebActivity : AppCompatActivity() {
     }
 
     private val mWebViewClient = object : WebViewClient() {
-
-//        override fun onPageStarted(view: WebView, url: String, favicon: Bitmap) {
-//            //do you  work
-//            Log.i("Info", "BaseWebActivity onPageStarted")
-//        }
     }
     private val mWebChromeClient = object : WebChromeClient() {
         override fun onProgressChanged(view: WebView, newProgress: Int) {
-            //do you work
-            //            Log.i("Info","progress:"+newProgress);
         }
 
         override fun onReceivedTitle(view: WebView, title: String) {
@@ -101,7 +92,7 @@ class WebActivity : AppCompatActivity() {
         }
     }
 
-    fun getUrl(): String? {
+    private fun getUrl(): String? {
         return url
     }
 

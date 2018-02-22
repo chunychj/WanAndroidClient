@@ -12,21 +12,23 @@ import cn.onlyloveyd.wanandroidclient.R
  */
 object Ext {
 
-    val DEFAULT_TIMEOUT: Long = 15
-    val BASE_URL: String = "http://www.wanandroid.com/"
-    val SAVE_USER_LOGIN_KEY = "user/login"
-    val SAVE_USER_REGISTER_KEY = "user/register"
+    const val DEFAULT_TIMEOUT: Long = 15
+    const val BASE_URL: String = "http://www.wanandroid.com/"
+    const val SAVE_USER_LOGIN_KEY = "user/login"
+    const val SAVE_USER_REGISTER_KEY = "user/register"
 
-    val COLLECTIONS_WEBSITE = "lg/collect"
-    val UNCOLLECTIONS_WEBSITE = "lg/uncollect"
+    const val COLLECTIONS_WEBSITE = "lg/collect"
+    const val UNCOLLECTIONS_WEBSITE = "lg/uncollect"
 
-    val SET_COOKIE_KEY = "set-cookie"
-    val COOKIE_NAME = "Cookie"
+    const val SET_COOKIE_KEY = "set-cookie"
+    const val COOKIE_NAME = "Cookie"
 
-    val PREF_IS_LOGIN = "islogin"
-    val PREF_USERNAME = "username"
+    const val PREF_IS_LOGIN = "islogin"
+    const val PREF_USERNAME = "username"
 
-    val LOGIN_REQUEST_CODE = 10001
+    const val LOGIN_REQUEST_CODE = 10001
+
+    val COLLECTIONS_SEGMENT_TITLES = arrayOf("文章", "网址")
 
     val BackgroundRepository = mutableListOf(
             R.drawable.bg_tag_one,

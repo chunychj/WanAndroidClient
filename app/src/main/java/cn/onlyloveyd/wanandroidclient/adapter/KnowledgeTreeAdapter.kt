@@ -5,9 +5,9 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.widget.TextView
-import cn.onlyloveyd.wanandroidclient.ext.Ext
 import cn.onlyloveyd.wanandroidclient.R
 import cn.onlyloveyd.wanandroidclient.bean.KnowledgeTreeBody
+import cn.onlyloveyd.wanandroidclient.ext.Ext
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.google.android.flexbox.FlexboxLayout
@@ -34,7 +34,7 @@ class KnowledgeTreeAdapter(private val context: Context?, datas: MutableList<Kno
         val children = item.children
         if (children.isNotEmpty()) {
             for ((index, value) in children.withIndex()) {
-                var textView = TextView(context)
+                val textView = TextView(context)
                 textView.text = value.name
                 textView.textColor = Color.WHITE
                 textView.padding = 4

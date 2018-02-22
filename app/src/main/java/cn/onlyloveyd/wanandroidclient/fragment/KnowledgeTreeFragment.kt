@@ -25,7 +25,7 @@ import me.yokeyword.fragmentation.SupportFragment
  * 描   述：
  * @author Mraz
  */
-class KnowledgeTreeFragment:SupportFragment(), BGARefreshLayout.BGARefreshLayoutDelegate {
+class KnowledgeTreeFragment : SupportFragment(), BGARefreshLayout.BGARefreshLayoutDelegate {
 
     private val datas = mutableListOf<KnowledgeTreeBody>()
 
@@ -82,9 +82,8 @@ class KnowledgeTreeFragment:SupportFragment(), BGARefreshLayout.BGARefreshLayout
         Retrofitance.wanAndroidAPI.getKnowledgeTrees()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    t: HttpResult<List<KnowledgeTreeBody>> ->
-                    t.data?.let {
+                .subscribe({ t: HttpResult<List<KnowledgeTreeBody>> ->
+                    t.data.let {
                         knowledgeTreeAdapter.run {
                             replaceData(it)
                             loadMoreComplete()
@@ -93,12 +92,11 @@ class KnowledgeTreeFragment:SupportFragment(), BGARefreshLayout.BGARefreshLayout
                         }
                     }
                     bgarefreshlayout.endRefreshing()
-                },{
-                    error ->
+                }, { error ->
                     error.printStackTrace()
-                },{
+                }, {
                     Logger.d("onComplete")
-                },{
+                }, {
                     Logger.d("onStart")
                 })
 

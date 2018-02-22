@@ -36,6 +36,7 @@
 
         <activity android:name=".activity.LoginActivity" android:theme="@style/AppTheme.Dark"/>
         <activity android:name=".activity.WebActivity" android:theme="@style/AppTheme.Dark"/>
+        <activity android:name=".activity.CollectionsActivity" android:theme="@style/AppTheme.Light"/>
     </application>
 
 </manifest>

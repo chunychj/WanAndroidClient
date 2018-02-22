@@ -45,7 +45,7 @@ class HotFragment : SupportFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        refresh_layout.setOnClickListener { _:View? ->
+        refresh_layout.setOnClickListener { _: View? ->
             getFriends()
         }
         flexboxlm.flexDirection = FlexDirection.ROW
@@ -63,8 +63,8 @@ class HotFragment : SupportFragment() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ t: HttpResult<List<Banner>> ->
-                    t.data?.let {
-                        bgabanner.setAdapter { banner, itemView, model, position ->
+                    t.data.let {
+                        bgabanner.setAdapter { _, itemView, model, _ ->
                             context?.let {
                                 Glide.with(it)
                                         .load(model)
@@ -90,7 +90,7 @@ class HotFragment : SupportFragment() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ t: HttpResult<List<Friend>> ->
-                    t.data?.let {
+                    t.data.let {
                         friendAdapter.run {
                             replaceData(it)
                             loadMoreComplete()
@@ -100,12 +100,12 @@ class HotFragment : SupportFragment() {
                     }
                 }, { error ->
                     error.printStackTrace()
-                },{
+                }, {
                     Logger.d("onComplete")
                     animation_view.cancelAnimation()
                     animation_view.visibility = View.GONE
                     rv_hot_website.visibility = View.VISIBLE
-                },{
+                }, {
                     Logger.d("onStart")
                 })
         animation_view.playAnimation()

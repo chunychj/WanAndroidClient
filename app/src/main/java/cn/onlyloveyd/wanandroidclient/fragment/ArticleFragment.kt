@@ -1,6 +1,7 @@
 package cn.onlyloveyd.wanandroidclient.fragment
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +18,6 @@ import com.orhanobut.logger.Logger
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_article.*
-import me.yokeyword.fragmentation.SupportFragment
 
 /**
  * 文 件 名: ArticleFragment
@@ -27,12 +27,12 @@ import me.yokeyword.fragmentation.SupportFragment
  * 博   客: https://onlyloveyd.cn
  * 描   述：
  */
-class ArticleFragment : SupportFragment(), BGARefreshLayout.BGARefreshLayoutDelegate {
+open class ArticleFragment : Fragment(), BGARefreshLayout.BGARefreshLayoutDelegate {
     private var index = 0
-    private var pageCount = 0
+    var pageCount = 0
     private val datas = mutableListOf<Article>()
 
-    private val articleAdapter: ArticlesAdapter by lazy {
+    val articleAdapter: ArticlesAdapter by lazy {
         ArticlesAdapter(context, datas)
     }
     private val linearLayoutManager: LinearLayoutManager by lazy {
@@ -74,6 +74,7 @@ class ArticleFragment : SupportFragment(), BGARefreshLayout.BGARefreshLayoutDele
 
     override fun onBGARefreshLayoutBeginLoadingMore(refreshLayout: BGARefreshLayout?): Boolean {
         if (pageCount != 0 && index > pageCount) {
+            index--
             return false
         }
         getArticles(++index)
@@ -84,7 +85,7 @@ class ArticleFragment : SupportFragment(), BGARefreshLayout.BGARefreshLayoutDele
         getArticles(0)
     }
 
-    private fun getArticles(pageNum: Int) {
+    open fun getArticles(pageNum: Int) {
         Retrofitance.wanAndroidAPI.getArticles(pageNum)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -107,6 +108,8 @@ class ArticleFragment : SupportFragment(), BGARefreshLayout.BGARefreshLayoutDele
                     }
                 }, { error ->
                     error.printStackTrace()
+                    bgarefreshlayout.endRefreshing()
+                    bgarefreshlayout.endLoadingMore()
                 }, {
                     Logger.d("onComplete")
                 }, {

@@ -13,7 +13,7 @@ import com.just.agentweb.IWebLayout
  * 描   述：
  * @author Mraz
  */
-class BGARefreshWebLayout(activity: Activity) : IWebLayout<WebView ,BGARefreshLayout> {
+class BGARefreshWebLayout(activity: Activity) : IWebLayout<WebView, BGARefreshLayout> {
 
     private val mBGARefreshLayout: BGARefreshLayout
     private val mWebView: WebView

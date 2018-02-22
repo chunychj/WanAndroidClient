@@ -25,11 +25,10 @@ class Retrofitance private constructor() {
 
     private object Holder {
         val INSTANCE = Retrofitance()
-        val WANANDROIDAPI = INSTANCE.retrofit.create(WanAndroidAPI::class.java)
+        val WANANDROIDAPI: WanAndroidAPI = INSTANCE.retrofit.create(WanAndroidAPI::class.java)
     }
 
     companion object {
-        val instance: Retrofitance by lazy { Holder.INSTANCE }
         val wanAndroidAPI: WanAndroidAPI by lazy { Holder.WANANDROIDAPI }
     }
 
@@ -88,7 +87,7 @@ class Retrofitance private constructor() {
     }
 
     private fun saveCookie(url: String?, domain: String?, cookies: String) {
-        System.err.println("yidong -- url = " + url + " domain = " + domain + " cookies = " + cookies)
+        System.err.println("yidong -- url = $url domain = $domain cookies = $cookies")
         url ?: return
         var spUrl: String by Preference(url, cookies)
         @Suppress("UNUSED_VALUE")
