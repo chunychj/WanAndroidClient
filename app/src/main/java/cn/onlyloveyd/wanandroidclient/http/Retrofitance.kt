@@ -64,7 +64,7 @@ class Retrofitance private constructor() {
                     val builder = request.newBuilder()
                     val domain = request.url().host()
                     val url = request.url().toString()
-                    if (domain.isNotEmpty() && (url.contains(Ext.COLLECTIONS_WEBSITE) || url.contains(Ext.UNCOLLECTIONS_WEBSITE))) {
+                    if (domain.isNotEmpty() && (url.contains(Ext.COLLECTIONS_WEBSITE) || url.contains(Ext.UNCOLLECTIONS_WEBSITE) || url.contains(Ext.ARTICLE_WEBSITE))) {
                         val spDomain: String by Preference(domain, "")
                         val cookie: String = if (spDomain.isNotEmpty()) spDomain else ""
                         if (cookie.isNotEmpty()) {

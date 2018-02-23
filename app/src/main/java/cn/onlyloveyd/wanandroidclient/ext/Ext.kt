@@ -11,6 +11,7 @@ import cn.onlyloveyd.wanandroidclient.R
  * 描   述：
  */
 object Ext {
+    const val HTTP_ERROR = -1
 
     const val DEFAULT_TIMEOUT: Long = 15
     const val BASE_URL: String = "http://www.wanandroid.com/"
@@ -19,6 +20,7 @@ object Ext {
 
     const val COLLECTIONS_WEBSITE = "lg/collect"
     const val UNCOLLECTIONS_WEBSITE = "lg/uncollect"
+    const val ARTICLE_WEBSITE = "article"
 
     const val SET_COOKIE_KEY = "set-cookie"
     const val COOKIE_NAME = "Cookie"

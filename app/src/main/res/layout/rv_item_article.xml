@@ -94,6 +94,7 @@
 
         </RelativeLayout>
         <LinearLayout
+            android:gravity="right"
             android:padding="@dimen/item_content_padding"
             android:orientation="horizontal"
             android:layout_width="match_parent"

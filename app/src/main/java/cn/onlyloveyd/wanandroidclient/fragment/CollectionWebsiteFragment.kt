@@ -9,9 +9,8 @@ import android.view.ViewGroup
 import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout
 import cn.onlyloveyd.wanandroidclient.R
-import cn.onlyloveyd.wanandroidclient.adapter.ArticlesAdapter
-import cn.onlyloveyd.wanandroidclient.bean.Article
-import cn.onlyloveyd.wanandroidclient.bean.ArticleResponseBody
+import cn.onlyloveyd.wanandroidclient.adapter.CollectionWebsiteAdapter
+import cn.onlyloveyd.wanandroidclient.bean.CollectionWebsite
 import cn.onlyloveyd.wanandroidclient.bean.HttpResult
 import cn.onlyloveyd.wanandroidclient.http.Retrofitance
 import com.orhanobut.logger.Logger
@@ -19,25 +18,24 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_article.*
 
-/**
- * 文 件 名: ArticleFragment
- * 创 建 人: 易冬
- * 创建日期: 2018/2/6 20:36
- * 邮   箱: onlyloveyd@gmail.com
- * 博   客: https://onlyloveyd.cn
- * 描   述：
- */
-class ArticleFragment : Fragment(), BGARefreshLayout.BGARefreshLayoutDelegate {
-    private var index = 0
-    private var pageCount = 0
-    private val datas = mutableListOf<Article>()
 
-    private val articleAdapter: ArticlesAdapter by lazy {
-        ArticlesAdapter(context, datas)
+/**
+ * 文 件 名: CollectionWebsiteFragment
+ * 创建日期: 2018/2/23 14:24
+ * 邮   箱: yidong@gz.csg.cn
+ * 描   述：
+ * @author Mraz
+ */
+class CollectionWebsiteFragment : Fragment(), BGARefreshLayout.BGARefreshLayoutDelegate {
+    private val datas = mutableListOf<CollectionWebsite>()
+
+    private val collectionWebsiteAdapter: CollectionWebsiteAdapter by lazy {
+        CollectionWebsiteAdapter(context, datas)
     }
     private val linearLayoutManager: LinearLayoutManager by lazy {
         LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
     }
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return LayoutInflater.from(context).inflate(R.layout.fragment_article, null, false)
@@ -65,7 +63,7 @@ class ArticleFragment : Fragment(), BGARefreshLayout.BGARefreshLayoutDelegate {
 
     private fun initRvContent() {
         rv_content.layoutManager = linearLayoutManager
-        rv_content.adapter = articleAdapter
+        rv_content.adapter = collectionWebsiteAdapter
     }
 
     private fun initBGAData() {
@@ -73,37 +71,23 @@ class ArticleFragment : Fragment(), BGARefreshLayout.BGARefreshLayoutDelegate {
     }
 
     override fun onBGARefreshLayoutBeginLoadingMore(refreshLayout: BGARefreshLayout?): Boolean {
-        if (pageCount != 0 && index > pageCount) {
-            index--
-            return false
-        }
-        getArticles(++index)
-        return true
+        return false
     }
 
     override fun onBGARefreshLayoutBeginRefreshing(refreshLayout: BGARefreshLayout?) {
-        getArticles(0)
+        getCollectionWebsite()
     }
 
-    private fun getArticles(pageNum: Int) {
-        Retrofitance.wanAndroidAPI.getArticles(pageNum)
+    private fun getCollectionWebsite() {
+        Retrofitance.wanAndroidAPI.getCollectionWebsites()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ t: HttpResult<ArticleResponseBody> ->
+                .subscribe({ t: HttpResult<MutableList<CollectionWebsite>> ->
                     Logger.d("t = " + t.data.toString())
-                    if (pageNum == 0) {
-                        pageCount = t.data.pageCount
-                    }
-                    t.data.datas.let {
-                        articleAdapter.run {
-                            if (bgarefreshlayout.currentRefreshStatus == BGARefreshLayout.RefreshStatus.REFRESHING) {
-                                replaceData(it)
-                                bgarefreshlayout.endRefreshing()
-                            }
-                            if (bgarefreshlayout.isLoadingMore) {
-                                addData(it)
-                                bgarefreshlayout.endLoadingMore()
-                            }
+                    t.data.let {
+                        collectionWebsiteAdapter.run {
+                            replaceData(it)
+                            bgarefreshlayout.endRefreshing()
                         }
                     }
                 }, { error ->
@@ -115,6 +99,5 @@ class ArticleFragment : Fragment(), BGARefreshLayout.BGARefreshLayoutDelegate {
                 }, {
                     Logger.d("onStart")
                 })
-
     }
 }

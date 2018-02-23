@@ -32,7 +32,7 @@ data class Article(
         @Json(name = "author") val author: String,
         @Json(name = "chapterId") val chapterId: Int,
         @Json(name = "chapterName") val chapterName: String,
-        @Json(name = "collect") val collect: Boolean,
+        @Json(name = "collect") var collect: Boolean,
         @Json(name = "courseId") val courseId: Int,
         @Json(name = "desc") val desc: String,
         @Json(name = "envelopePic") val envelopePic: String,
@@ -109,13 +109,43 @@ data class LoginData(
 )
 
 //收藏网站
-data class CollectionWebsiteResponse(
+data class CollectionWebsite(
         @Json(name = "desc") val desc: String,
         @Json(name = "icon") val icon: String,
         @Json(name = "id") val id: Int,
-        @Json(name = "link") val link: String,
-        @Json(name = "name") val name: String,
+        @Json(name = "link") var link: String,
+        @Json(name = "name") var name: String,
         @Json(name = "order") val order: Int,
         @Json(name = "userId") val userId: Int,
         @Json(name = "visible") val visible: Int
+)
+
+
+data class CollectionResponseBody<T>(
+        @Json(name = "curPage") val curPage: Int,
+        @Json(name = "datas") val datas: List<T>,
+        @Json(name = "offset") val offset: Int,
+        @Json(name = "over") val over: Boolean,
+        @Json(name = "pageCount") val pageCount: Int,
+        @Json(name = "size") val size: Int,
+        @Json(name = "total") val total: Int
+)
+
+data class CollectionArticle(
+        @Json(name = "author") val author: String,
+        @Json(name = "chapterId") val chapterId: Int,
+        @Json(name = "chapterName") val chapterName: String,
+        @Json(name = "courseId") val courseId: Int,
+        @Json(name = "desc") val desc: String,
+        @Json(name = "envelopePic") val envelopePic: String,
+        @Json(name = "id") val id: Int,
+        @Json(name = "link") val link: String,
+        @Json(name = "niceDate") val niceDate: String,
+        @Json(name = "origin") val origin: String,
+        @Json(name = "originId") val originId: Int,
+        @Json(name = "publishTime") val publishTime: Long,
+        @Json(name = "title") val title: String,
+        @Json(name = "userId") val userId: Int,
+        @Json(name = "visible") val visible: Int,
+        @Json(name = "zan") val zan: Int
 )

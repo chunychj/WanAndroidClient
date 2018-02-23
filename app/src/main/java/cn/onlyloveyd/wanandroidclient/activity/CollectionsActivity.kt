@@ -8,10 +8,10 @@ import android.support.v4.view.ViewPager
 import android.support.v7.app.AppCompatActivity
 import cn.onlyloveyd.wanandroidclient.R
 import cn.onlyloveyd.wanandroidclient.ext.Ext
-import cn.onlyloveyd.wanandroidclient.ext.Preference
 import cn.onlyloveyd.wanandroidclient.fragment.CollectionArticlesFragment
+import cn.onlyloveyd.wanandroidclient.fragment.CollectionWebsiteFragment
+import com.flyco.tablayout.listener.OnTabSelectListener
 import kotlinx.android.synthetic.main.activity_collections.*
-import java.util.*
 
 /**
  * 文 件 名: CollectionsActivity
@@ -21,7 +21,9 @@ import java.util.*
  * @author Mraz
  */
 class CollectionsActivity : AppCompatActivity() {
-    private val mFragments = ArrayList<Fragment>()
+    private val mFragments by lazy {
+        listOf(CollectionArticlesFragment(), CollectionWebsiteFragment())
+    }
     private val mCollectionsSegmentAdapter by lazy {
         CollectionsPagerAdapter(supportFragmentManager)
     }
@@ -29,9 +31,6 @@ class CollectionsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_collections)
-
-        mFragments.add(CollectionArticlesFragment())
-        mFragments.add(CollectionArticlesFragment())
 
         collections_segment_layout.setTabData(Ext.COLLECTIONS_SEGMENT_TITLES)
         bgaviewpager.adapter = mCollectionsSegmentAdapter
@@ -49,6 +48,15 @@ class CollectionsActivity : AppCompatActivity() {
             }
         })
         bgaviewpager.currentItem = 0
+        collections_segment_layout.setOnTabSelectListener(object : OnTabSelectListener {
+            override fun onTabSelect(position: Int) {
+                bgaviewpager.currentItem = position
+            }
+
+            override fun onTabReselect(position: Int) {
+            }
+
+        })
 
         toolbar.setNavigationOnClickListener { _ ->
             this@CollectionsActivity.finish()
@@ -66,7 +74,7 @@ class CollectionsActivity : AppCompatActivity() {
         }
 
         override fun getItem(position: Int): Fragment {
-            return mFragments[position]
+            return mFragments[position] as Fragment
         }
     }
 }
