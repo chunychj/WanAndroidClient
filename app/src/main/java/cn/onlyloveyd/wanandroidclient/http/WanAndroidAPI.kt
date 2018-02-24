@@ -29,8 +29,8 @@ interface WanAndroidAPI {
     fun getFriendWebsites(): Observable<HttpResult<List<Friend>>>
 
 
-//    @GET("article/list/{pageNum}/json?cid={cid}")
-//    fun getKnowledgeTreeArticles(@Path("pageNum") pageNum: Int, @Path("cid") cid: Int) : Observable<ArticleResponse>
+    @GET("/article/list/{page}/json")
+    fun getKnowledgeTreeArticles(@Path("page") page: Int, @Query("cid") cid: Int):Observable<HttpResult<ArticleResponseBody>>
 
 
     @POST("user/login")

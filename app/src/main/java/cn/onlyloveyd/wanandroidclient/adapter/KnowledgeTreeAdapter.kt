@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Build
 import android.widget.TextView
 import cn.onlyloveyd.wanandroidclient.R
+import cn.onlyloveyd.wanandroidclient.activity.KnowledgeActivity
 import cn.onlyloveyd.wanandroidclient.bean.KnowledgeTreeBody
 import cn.onlyloveyd.wanandroidclient.ext.Ext
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -13,6 +14,7 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.google.android.flexbox.FlexboxLayout
 import org.jetbrains.anko.backgroundDrawable
 import org.jetbrains.anko.padding
+import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.textColor
 
 
@@ -42,6 +44,10 @@ class KnowledgeTreeAdapter(private val context: Context?, datas: MutableList<Kno
                 val lp = FlexboxLayout.LayoutParams(FlexboxLayout.LayoutParams.WRAP_CONTENT, FlexboxLayout.LayoutParams.WRAP_CONTENT)
                 lp.setMargins(6, 6, 6, 6)
                 flexlayout.addView(textView, lp)
+            }
+
+            helper.itemView.setOnClickListener { _->
+                context?.startActivity<KnowledgeActivity>("NAME" to (item.children.map { it.name}), "CID" to (item.children.map { it.id }))
             }
         }
     }

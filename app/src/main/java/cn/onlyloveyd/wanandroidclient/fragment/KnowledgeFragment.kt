@@ -1,18 +1,11 @@
 package cn.onlyloveyd.wanandroidclient.fragment
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import cn.bingoogolapple.refreshlayout.BGANormalRefreshViewHolder
 import cn.bingoogolapple.refreshlayout.BGARefreshLayout
-import cn.onlyloveyd.wanandroidclient.R
-import cn.onlyloveyd.wanandroidclient.adapter.ArticlesAdapter
 import cn.onlyloveyd.wanandroidclient.bean.Article
 import cn.onlyloveyd.wanandroidclient.bean.ArticleResponseBody
 import cn.onlyloveyd.wanandroidclient.bean.HttpResult
+import cn.onlyloveyd.wanandroidclient.bean.Knowledge
 import cn.onlyloveyd.wanandroidclient.http.Retrofitance
 import com.orhanobut.logger.Logger
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -20,35 +13,31 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_article.*
 
 /**
- * 文 件 名: ArticleFragment
- * 创 建 人: 易冬
- * 创建日期: 2018/2/6 20:36
- * 邮   箱: onlyloveyd@gmail.com
- * 博   客: https://onlyloveyd.cn
+ * 文 件 名: KnowledgeFragment
+ * 创建日期: 2018/2/24 16:15
+ * 邮   箱: yidong@gz.csg.cn
  * 描   述：
+ * @author Mraz
  */
-open class ArticleFragment: RefreshFragment<Article>() {
+class KnowledgeFragment: ArticleFragment() {
 
-    val adapter by lazy {
-        ArticlesAdapter(context, datas)
-    }
-
-    override fun initRvContent() {
-        super.initRvContent()
-        rv_content.adapter = adapter
-    }
-
-    override fun onBGARefreshLayoutBeginLoadingMore(refreshLayout: BGARefreshLayout?): Boolean {
-        if (pageCount != 0 && index > pageCount) {
-            index--
-            return false
+    companion object {
+        private val ARG = "cid"
+        fun newInstance(cid: Int): KnowledgeFragment {
+            val args = Bundle()
+            args.putInt(ARG, cid)
+            val fragment = KnowledgeFragment()
+            fragment.arguments = args
+            return fragment
         }
-        getData(++index)
-        return true
+    }
+
+    private val cid by lazy {
+        arguments?.getInt("cid")
     }
 
     override fun getData(pageNum: Int) {
-        Retrofitance.wanAndroidAPI.getArticles(pageNum)
+        Retrofitance.wanAndroidAPI.getKnowledgeTreeArticles(pageNum, cid!!)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ t: HttpResult<ArticleResponseBody> ->

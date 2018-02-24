@@ -26,48 +26,15 @@ import kotlinx.android.synthetic.main.fragment_article.*
  * 描   述：
  * @author Mraz
  */
-class CollectionWebsiteFragment : Fragment(), BGARefreshLayout.BGARefreshLayoutDelegate {
-    private val datas = mutableListOf<CollectionWebsite>()
+class CollectionWebsiteFragment : RefreshFragment<CollectionWebsite>(), BGARefreshLayout.BGARefreshLayoutDelegate {
 
-    private val collectionWebsiteAdapter: CollectionWebsiteAdapter by lazy {
+    private val adapter: CollectionWebsiteAdapter by lazy {
         CollectionWebsiteAdapter(context, datas)
     }
-    private val linearLayoutManager: LinearLayoutManager by lazy {
-        LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-    }
 
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return LayoutInflater.from(context).inflate(R.layout.fragment_article, null, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-
-        initBGALayout()
-        initRvContent()
-        initBGAData()
-    }
-
-    private fun initBGALayout() {
-        // 为BGARefreshLayout 设置代理
-        bgarefreshlayout.setDelegate(this)
-        // 设置下拉刷新和上拉加载更多的风格     参数1：应用程序上下文，参数2：是否具有上拉加载更多功能
-
-        val refreshViewHolder = BGANormalRefreshViewHolder(context, true)
-        refreshViewHolder.setLoadingMoreText(getString(R.string.load_more))
-        refreshViewHolder.setLoadMoreBackgroundColorRes(R.color.white)
-        refreshViewHolder.setRefreshViewBackgroundColorRes(R.color.white)
-        bgarefreshlayout.setRefreshViewHolder(refreshViewHolder)
-    }
-
-    private fun initRvContent() {
-        rv_content.layoutManager = linearLayoutManager
-        rv_content.adapter = collectionWebsiteAdapter
-    }
-
-    private fun initBGAData() {
-        bgarefreshlayout.beginRefreshing()
+    override fun initRvContent() {
+        super.initRvContent()
+        rv_content.adapter = adapter
     }
 
     override fun onBGARefreshLayoutBeginLoadingMore(refreshLayout: BGARefreshLayout?): Boolean {
@@ -75,17 +42,17 @@ class CollectionWebsiteFragment : Fragment(), BGARefreshLayout.BGARefreshLayoutD
     }
 
     override fun onBGARefreshLayoutBeginRefreshing(refreshLayout: BGARefreshLayout?) {
-        getCollectionWebsite()
+        getData(0)
     }
 
-    private fun getCollectionWebsite() {
+    override fun getData(pageNum: Int) {
         Retrofitance.wanAndroidAPI.getCollectionWebsites()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ t: HttpResult<MutableList<CollectionWebsite>> ->
                     Logger.d("t = " + t.data.toString())
                     t.data.let {
-                        collectionWebsiteAdapter.run {
+                        adapter.run {
                             replaceData(it)
                             bgarefreshlayout.endRefreshing()
                         }
