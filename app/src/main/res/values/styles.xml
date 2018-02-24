@@ -46,7 +46,7 @@
 
     <style name="toolBar">
         <item name="colorControlNormal">#ffffff</item>
-        <item name="android:homeAsUpIndicator">@mipmap/exit</item>
+        <item name="android:homeAsUpIndicator">@drawable/close</item>
         <item name="android:titleTextStyle">@style/titlestyle</item>
     </style>
     <style name="titlestyle">

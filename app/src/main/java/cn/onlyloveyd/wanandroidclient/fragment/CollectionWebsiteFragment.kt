@@ -28,12 +28,16 @@ import kotlinx.android.synthetic.main.fragment_article.*
  */
 class CollectionWebsiteFragment : RefreshFragment<CollectionWebsite>(), BGARefreshLayout.BGARefreshLayoutDelegate {
 
+    val linearLayoutManager: LinearLayoutManager by lazy {
+        LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+    }
+
     private val adapter: CollectionWebsiteAdapter by lazy {
         CollectionWebsiteAdapter(context, datas)
     }
 
     override fun initRvContent() {
-        super.initRvContent()
+        rv_content.layoutManager = linearLayoutManager
         rv_content.adapter = adapter
     }
 

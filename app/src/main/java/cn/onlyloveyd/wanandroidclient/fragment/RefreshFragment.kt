@@ -34,10 +34,6 @@ abstract class RefreshFragment<T>: Fragment(), BGARefreshLayout.BGARefreshLayout
     var pageCount = 0
     val datas = mutableListOf<T>()
 
-    private val linearLayoutManager: LinearLayoutManager by lazy {
-        LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return LayoutInflater.from(context).inflate(R.layout.fragment_article, null, false)
     }
@@ -61,9 +57,7 @@ abstract class RefreshFragment<T>: Fragment(), BGARefreshLayout.BGARefreshLayout
         bgarefreshlayout.setRefreshViewHolder(refreshViewHolder)
     }
 
-    open fun initRvContent() {
-        rv_content.layoutManager = linearLayoutManager
-    }
+    abstract fun initRvContent()
 
     private fun initBGAData() {
         bgarefreshlayout.beginRefreshing()

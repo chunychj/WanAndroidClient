@@ -10,7 +10,8 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:navigationIcon="@drawable/ic_back_dark"/>
+        android:background="@color/colorAccent"
+        app:navigationIcon="@drawable/ic_back"/>
 
     <com.flyco.tablayout.SlidingTabLayout
         android:id="@+id/stl_knowledge"

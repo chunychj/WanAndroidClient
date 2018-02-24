@@ -28,12 +28,16 @@ import kotlinx.android.synthetic.main.fragment_article.*
  */
 open class CollectionArticlesFragment : RefreshFragment<CollectionArticle>(), BGARefreshLayout.BGARefreshLayoutDelegate {
 
+    val linearLayoutManager: LinearLayoutManager by lazy {
+        LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+    }
+
     val adapter by lazy {
         CollectionArticlesAdapter(context, datas)
     }
 
     override fun initRvContent() {
-        super.initRvContent()
+        rv_content.layoutManager = linearLayoutManager
         rv_content.adapter = adapter
     }
 
