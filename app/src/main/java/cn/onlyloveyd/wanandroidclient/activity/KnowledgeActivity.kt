@@ -35,13 +35,7 @@ class KnowledgeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_knowledge)
-        System.err.println("yidong -- names = " + names)
-        System.err.println("yidong -- cids = " + cids)
-
         initFragments()
-        System.err.println("yidong -- fragments.size = " + mFragments?.size)
-
-
         bgaviewpager.adapter = knowledgePagerAdapter
         stl_knowledge.setViewPager(bgaviewpager)
 

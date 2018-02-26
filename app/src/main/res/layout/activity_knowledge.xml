@@ -17,9 +17,11 @@
         android:id="@+id/stl_knowledge"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:background="@color/colorAccent"
+        android:background="#222831"
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
+        tl:tl_indicator_color="#393E46"
+        tl:tl_indicator_corner_radius="5dp"
         tl:tl_indicator_margin_left="2dp"
         tl:tl_indicator_margin_right="2dp"
         tl:tl_indicator_style="BLOCK"/>
