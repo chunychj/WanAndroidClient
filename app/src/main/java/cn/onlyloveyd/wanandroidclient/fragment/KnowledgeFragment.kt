@@ -62,6 +62,7 @@ class KnowledgeFragment: RefreshFragment<Article>() {
         linearLayoutManager = null
         adapter = null
     }
+
     override fun onBGARefreshLayoutBeginLoadingMore(refreshLayout: BGARefreshLayout?): Boolean {
         if (pageCount != 0 && index > pageCount) {
             index--

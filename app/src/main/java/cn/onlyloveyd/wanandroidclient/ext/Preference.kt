@@ -7,9 +7,12 @@ import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
 /**
- * SharedPreferences operation, you need application to invoke setContext
- * @param name sp key name
- * @param default default value
+ * 文 件 名: Preference
+ * 创 建 人: 易冬
+ * 创建日期: 2018/2/6 21:24
+ * 邮   箱: onlyloveyd@gmail.com
+ * 博   客: https://onlyloveyd.cn
+ * 描   述：
  */
 class Preference<T>(private val name: String, private val default: T) : ReadWriteProperty<Any?, T> {
 
