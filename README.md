@@ -5,9 +5,9 @@
 http://www.wanandroid.com/blog/show/2
 
 ## App设计
-色调：远州鼠、落栗、苏芳、石竹、枯草、柳煤竹茶、锖青磁、鸠羽紫八种淡雅的颜色
-布局：简约风格，极简主义，去繁就简。
-排版：BottomNavigation & Fragment
+1. 色调：远州鼠、落栗、苏芳、石竹、枯草、柳煤竹茶、锖青磁、鸠羽紫八种淡雅的颜色
+2. 布局：简约风格，极简主义，去繁就简。
+3. 排版：BottomNavigation & Fragment
      TabLayout&ViewPager
 ## UI设计
 1. 黑白灰
