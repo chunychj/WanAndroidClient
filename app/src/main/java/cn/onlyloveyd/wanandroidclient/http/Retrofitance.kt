@@ -87,7 +87,6 @@ class Retrofitance private constructor() {
     }
 
     private fun saveCookie(url: String?, domain: String?, cookies: String) {
-        System.err.println("yidong -- url = $url domain = $domain cookies = $cookies")
         url ?: return
         var spUrl: String by Preference(url, cookies)
         @Suppress("UNUSED_VALUE")

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import cn.onlyloveyd.wanandroidclient.R
 import cn.onlyloveyd.wanandroidclient.activity.CollectionsActivity
 import cn.onlyloveyd.wanandroidclient.activity.LoginActivity
+import cn.onlyloveyd.wanandroidclient.activity.WebActivity
 import cn.onlyloveyd.wanandroidclient.ext.Ext
 import cn.onlyloveyd.wanandroidclient.ext.Preference
 import kotlinx.android.synthetic.main.fragment_me.*
@@ -68,7 +69,7 @@ class MeFragment : SupportFragment() {
         }
 
         about_layout.setOnClickListener { _ ->
-
+            context?.startActivity<WebActivity>("URL" to "http://onlyloveyd.cn/about")
         }
     }
 
@@ -84,9 +85,6 @@ class MeFragment : SupportFragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == Ext.LOGIN_REQUEST_CODE && resultCode == RESULT_OK) {
-            System.err.println("yidong -- resultCode = " + resultCode)
-            System.err.println("yidong -- intent = " + data?.extras.toString())
-
             val username = data?.getStringExtra("username")
             tv_username.text = username
             avatar_layout.isClickable = false
