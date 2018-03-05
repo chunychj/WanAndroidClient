@@ -46,6 +46,8 @@ abstract class RefreshFragment<T>: Fragment(), BGARefreshLayout.BGARefreshLayout
         initBGAData()
     }
 
+
+
     private fun initBGALayout() {
         // 为BGARefreshLayout 设置代理
         bgarefreshlayout.setDelegate(this)
