@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">WanAndroidClient</string>
+    <string name="app_name">WanAndroid</string>
     <string name="title_home">首页</string>
     <string name="title_dashboard">知识体系</string>
     <string name="title_hot">热门</string>

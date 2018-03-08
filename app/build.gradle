@@ -10,10 +10,11 @@ android {
         applicationId "cn.onlyloveyd.wanandroidclient"
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
+
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        vectorDrawables.useSupportLibrary= true
+        vectorDrawables.useSupportLibrary = true
 
         multiDexEnabled true
     }
@@ -24,17 +25,20 @@ android {
         }
 
         release {
-            minifyEnabled true
-            shrinkResources true // 移除无用资源
+            minifyEnabled false
+            //shrinkResources true // 移除无用资源
             zipAlignEnabled true // 开启压缩
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
             android.applicationVariants.all { variant ->
                 variant.outputs.all {
-                    outputFileName = "${variant.name}-${variant.versionName}.apk"
+                    outputFileName = "WanAndroid-v${variant.versionName}.apk"
                 }
             }
         }
+    }
+    dataBinding {
+        enabled = true
     }
 }
 
@@ -71,7 +75,7 @@ dependencies {
     //anko
     implementation "org.jetbrains.anko:anko:$anko_version"
     compile "org.jetbrains.anko:anko-commons:$anko_version"
-    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.2.21'
+    implementation 'org.jetbrains.kotlin:kotlin-reflect:1.2.30'
     //fragment
     implementation 'me.yokeyword:fragmentation:1.2.6'
     implementation 'me.yokeyword:fragmentation-swipeback:1.2.6'
@@ -84,7 +88,8 @@ dependencies {
     implementation 'com.orhanobut:logger:2.1.1'
     implementation 'com.google.android:flexbox:0.3.0-alpha2'
     implementation 'com.airbnb.android:lottie:2.5.0-rc1'
-
     implementation 'com.just.agentweb:agentweb:3.1.0'
-    implementation'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+    implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+
+    implementation 'cn.hugeterry.updatefun:updatefun:2.0.6'
 }
