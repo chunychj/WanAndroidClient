@@ -1,7 +1,7 @@
 # Wandroid
 ![icon](/app/src/main/res/mipmap-xxhdpi/ic_launcher.png "")
 
-#酷安下载地址
+# 酷安下载地址
 https://www.coolapk.com/apk/179570
 
 ## 数据来源
